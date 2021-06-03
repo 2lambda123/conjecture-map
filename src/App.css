@@ -22,3 +22,27 @@
 #high-level-conjecture-input {
   width: 90%;
 }
+
+#columns {
+  display: flex;   
+  justify-content: space-between;
+  padding: 20px;
+  height: 50%;
+}
+
+.column {
+  width: 30%;    
+}
+
+.column-items {
+  border: 1px solid grey;
+  min-height: 200px;  
+  display: flex;
+  flex-direction: column;
+}
+
+.statement-list {
+  list-style-type:none;
+  padding-left: 15px;
+}
+
