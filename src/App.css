@@ -41,8 +41,27 @@
   flex-direction: column;
 }
 
-.statement-list {
-  list-style-type:none;
-  padding-left: 15px;
+
+
+
+.statement-container {
+ display: flex; 
+ align-items: center;
+ width: 100%;    
+ padding-top: 10px;
 }
 
+.statement-text {
+  min-width: 80%;  
+  max-width: 80%;
+}
+
+.remove-btn {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.add-btn {
+  margin-left: 5px;
+  margin-top: 10px;
+}

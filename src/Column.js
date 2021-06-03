@@ -1,16 +1,27 @@
 import React, {useState} from "react"
+import StatementContainer from './StatementContainer'
 
 function Column({title}) {
-    const [statements, updateStatements] = useState([0])    
+    const [statements, updateStatements] = useState({})    
     const [nextItemId, updateNextItemId] = useState(0)
 
     const addStatement = () => {                        
-        updateStatements(statements.concat(nextItemId + 1))  
-        updateNextItemId(nextItemId + 1)                              
+        updateNextItemId(nextItemId =>  {return nextItemId + 1})      
+        const newStatements = {...statements}            
+        newStatements[nextItemId] = ""
+        updateStatements(newStatements)               
     }    
 
-    const removeStatement = x => {        
-        updateStatements(statements.filter(s => s !== x))
+    const removeStatement = itemToDelete => {          
+        const { [itemToDelete]: deleted, ...objectWithoutDeletedItem } = statements;  
+        updateStatements(objectWithoutDeletedItem)
+    }
+
+    const updateText = (itemID, event) => {        
+        const {value} = event.target                
+        const newStatements = {...statements}
+        newStatements[itemID] = value
+        updateStatements(newStatements)               
     }
     
     return (
@@ -22,11 +33,15 @@ function Column({title}) {
                
                 <div>
                     {
-                        statements.map((s) => {
+                        Object.entries(statements).map((e) => {
                             return (                            
-                                <div key={s}>
-                                    <textarea /> 
-                                    <button onClick={()=>removeStatement(s)}>-</button>
+                                <div key={e[0]}>                                    
+                                    <StatementContainer
+                                        value={e[1]}
+                                        id={e[0]}
+                                        updateText={updateText}
+                                        removeStatement={removeStatement}
+                                    />                                    
                                 </div>                            
                                                             
                             )
@@ -34,7 +49,10 @@ function Column({title}) {
                     }
                 </div>     
                 <div >
-                    <button  onClick={addStatement}>
+                    <button  
+                        className="add-btn"
+                        onClick={addStatement}
+                    >
                         +
                     </button>
                 </div>
