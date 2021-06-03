@@ -1,28 +1,32 @@
 import React, {useState} from "react"
 import StatementContainer from './StatementContainer'
 
-function Column({title}) {
-    const [statements, updateStatements] = useState({})    
-    const [nextItemId, updateNextItemId] = useState(0)
+function Column({title, 
+                statements,
+                updateText,                
+                removeStatement,
+                addStatement}) {
+    // const [statements, updateStatements] = useState({0: ""})    
+    // const [nextItemId, updateNextItemId] = useState(1)
 
-    const addStatement = () => {                        
-        updateNextItemId(nextItemId =>  {return nextItemId + 1})      
-        const newStatements = {...statements}            
-        newStatements[nextItemId] = ""
-        updateStatements(newStatements)               
-    }    
+    // const addStatement = () => {                        
+    //     updateNextItemId(nextItemId =>  {return nextItemId + 1})      
+    //     const newStatements = {...statements}            
+    //     newStatements[nextItemId] = ""
+    //     updateStatements(newStatements)               
+    // }    
 
-    const removeStatement = itemToDelete => {          
-        const { [itemToDelete]: deleted, ...objectWithoutDeletedItem } = statements;  
-        updateStatements(objectWithoutDeletedItem)
-    }
+    // const removeStatement = itemToDelete => {          
+    //     const { [itemToDelete]: deleted, ...objectWithoutDeletedItem } = statements;  
+    //     updateStatements(objectWithoutDeletedItem)
+    // }
 
-    const updateText = (itemID, event) => {        
-        const {value} = event.target                
-        const newStatements = {...statements}
-        newStatements[itemID] = value
-        updateStatements(newStatements)               
-    }
+    // const updateText = (itemID, event) => {        
+    //     const {value} = event.target                
+    //     const newStatements = {...statements}
+    //     newStatements[itemID] = value
+    //     updateStatements(newStatements)               
+    // }
     
     return (
         <div className="column">
