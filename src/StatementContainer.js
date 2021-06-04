@@ -1,11 +1,19 @@
-import {useState} from "react"
-
-function StatementContainer({id, text, updateText, removeStatement}) {    
-        
+import React from "react"
+ 
+const StatementContainer = ({id, 
+                             DOMid,
+                             text, 
+                             updateText, 
+                             removeStatement,
+                             handleStatementClick
+                            }) => {
 
     return (
         <div 
-            className="statement-container"            
+            className="statement-container" 
+            id={DOMid}   
+            // ref={ref}        
+            onClick={handleStatementClick}
         >
             <button 
                 className="remove-btn"
@@ -20,6 +28,7 @@ function StatementContainer({id, text, updateText, removeStatement}) {
             />
         </div>
     )
+
 }
 
 export default StatementContainer

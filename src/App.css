@@ -45,15 +45,16 @@
 
 
 .statement-container {
- display: flex; 
- align-items: center;
- width: 100%;    
- padding-top: 10px;
+  display: flex; 
+  align-items: center;
+  width: 90%;    
+  padding-top: 10px;
+  /* border: 1px solid grey; */
 }
 
 .statement-text {
-  min-width: 80%;  
-  max-width: 80%;
+  min-width: 85%;  
+  max-width: 85%;
 }
 
 .remove-btn {

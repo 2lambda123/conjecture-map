@@ -1,33 +1,13 @@
-import React, {useState} from "react"
+import React from "react"
 import StatementContainer from './StatementContainer'
 
 function Column({title, 
                 statements,
                 updateText,                
                 removeStatement,
-                addStatement}) {
-    // const [statements, updateStatements] = useState({0: ""})    
-    // const [nextItemId, updateNextItemId] = useState(1)
+                addStatement,
+                handleStatementClick}) {
 
-    // const addStatement = () => {                        
-    //     updateNextItemId(nextItemId =>  {return nextItemId + 1})      
-    //     const newStatements = {...statements}            
-    //     newStatements[nextItemId] = ""
-    //     updateStatements(newStatements)               
-    // }    
-
-    // const removeStatement = itemToDelete => {          
-    //     const { [itemToDelete]: deleted, ...objectWithoutDeletedItem } = statements;  
-    //     updateStatements(objectWithoutDeletedItem)
-    // }
-
-    // const updateText = (itemID, event) => {        
-    //     const {value} = event.target                
-    //     const newStatements = {...statements}
-    //     newStatements[itemID] = value
-    //     updateStatements(newStatements)               
-    // }
-    
     return (
         <div className="column">
             <div>
@@ -38,16 +18,16 @@ function Column({title,
                 <div>
                     {
                         Object.entries(statements).map((e) => {
-                            return (                            
-                                <div key={e[0]}>                                    
+                            return (                                                            
                                     <StatementContainer
-                                        value={e[1]}
+                                        key={e[0]}
                                         id={e[0]}
+                                        DOMid={e[1]["DOMid"]}                                        
+                                        text={e[1]["text"]}                                                                                
                                         updateText={updateText}
                                         removeStatement={removeStatement}
-                                    />                                    
-                                </div>                            
-                                                            
+                                        handleStatementClick={handleStatementClick}
+                                    />                                                                                                                                                       
                             )
                         })
                     }
