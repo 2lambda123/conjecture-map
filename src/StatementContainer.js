@@ -1,35 +1,38 @@
 import React from "react"
- 
+import RemoveOrConnectButton from "./RemoveOrConnectButton"
+import ArrowButton from "./ArrowButton"
 const StatementContainer = ({id, 
-                             DOMid,
+                             statementID,
                              text, 
                              updateText, 
-                             removeStatement,
-                             handleArrowButtonClick
+                             handleArrowButtonClick,
+                             removeStatement,                             
+                             newArrowStart
                             }) => {
 
+    
     return (
         <div 
             className="statement-container" 
-            id={DOMid}                                 
+            id={statementID}                                 
         >
-            <button 
-                className="remove-btn"
-                onClick={()=>removeStatement(id)}
-            >
-                -
-            </button>
+                
+            <RemoveOrConnectButton
+                removeStatement={removeStatement}
+                newArrowStart={newArrowStart}
+                handleArrowButtonClick={handleArrowButtonClick}
+                id={id}
+            />
             <textarea 
                 className="statement-text"
                 value={text}
                 onChange={event => updateText(id, event)}
+            />            
+            <ArrowButton
+                handleArrowButtonClick={handleArrowButtonClick}
+                newArrowStart={newArrowStart}
+                statementID={statementID}
             />
-            <button 
-                className="arrow-button"                
-                onClick={handleArrowButtonClick}
-            >
-                →
-            </button>
         </div>
     )
 

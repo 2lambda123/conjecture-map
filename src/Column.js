@@ -6,7 +6,8 @@ function Column({title,
                 updateText,                
                 removeStatement,
                 addStatement,
-                handleArrowButtonClick}) {
+                handleArrowButtonClick,
+                newArrowStart}) {
 
     return (
         <div className="column">
@@ -22,11 +23,12 @@ function Column({title,
                                     <StatementContainer
                                         key={e[0]}
                                         id={e[0]}
-                                        DOMid={e[1]["DOMid"]}                                        
+                                        statementID={e[1]["statementID"]}                                        
                                         text={e[1]["text"]}                                                                                
                                         updateText={updateText}
                                         removeStatement={removeStatement}
                                         handleArrowButtonClick={handleArrowButtonClick}
+                                        newArrowStart={newArrowStart}
                                     />                                                                                                                                                       
                             )
                         })

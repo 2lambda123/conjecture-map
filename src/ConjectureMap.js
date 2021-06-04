@@ -1,36 +1,34 @@
 import React, {useState} from "react"
-import Xarrow from "react-xarrows";
+import XarrowInteractive from "./XarrowInteractive";
 import './App.css'
 import HighLevelConjecture from './HighLevelConjecture'
 import Column from './Column'
 
 function ConjectureMap() {
     
-    // const [embodimentStatements, updateEmbodimentStatements] = useState({1: ""})    
-    // const [medProcessesStatements, updateMedProcessesStatements] = useState({2: ""})    
-    // const [outcomesStatements, updateOutcomesStatements] = useState({3: ""})    
-    const [embodimentStatements, updateEmbodimentStatements] = useState({1: {text: "", DOMid: 'statement-1'}})    
-    const [medProcessesStatements, updateMedProcessesStatements] = useState({2: {text: "", DOMid: 'statement-2'}})    
-    const [outcomesStatements, updateOutcomesStatements] = useState({3: {text: "", DOMid: 'statement-3'}})    
+    const [embodimentStatements, updateEmbodimentStatements] = useState({1: {text: "", statementID: 'statement-1'}})    
+    const [medProcessesStatements, updateMedProcessesStatements] = useState({2: {text: "", statementID: 'statement-2'}})    
+    const [outcomesStatements, updateOutcomesStatements] = useState({3: {text: "", statementID: 'statement-3'}})    
     const [nextItemId, updateNextItemId] = useState(4)
     const [arrowsList, updateArrowsList] = useState([])
     const [newArrowStart, updateNewArrowStart] = useState(null)
     
+
     const addStatement = (statements, updateStatements) => {
         return () => {            
             updateNextItemId(nextItemId =>  {return nextItemId + 1})      
             const newStatements = {...statements}            
-            newStatements[nextItemId] = {text: "", DOMid: `statement-${nextItemId}`}
+            newStatements[nextItemId] = {text: "", statementID: `statement-${nextItemId}`}
             updateStatements(newStatements)   
         }                                            
     }    
 
     const removeStatement = (statements, updateStatements) => {            
         return (itemToDelete) => {         
-            const DOMid = statements[itemToDelete]['DOMid']                         
+            const statementID = statements[itemToDelete]['statementID']                         
             const { [itemToDelete]: deleted, ...objectWithoutDeletedItem } = statements;  
             updateStatements(objectWithoutDeletedItem)
-            const newArrowsList = arrowsList.filter(e => !e.includes(DOMid))
+            const newArrowsList = arrowsList.filter(e => !e.includes(statementID))
             updateArrowsList(newArrowsList)
             
         }
@@ -44,31 +42,24 @@ function ConjectureMap() {
             updateStatements(newStatements)              
             }
 
-    }     
-       
-    const printStates = () => {
-        console.log(embodimentStatements)
-    }
+    }            
 
     const handleArrowButtonClick = (event) => {
         const target = event.target
         const statementId = target.parentElement.id        
-        
+        console.log(statementId)
         if (newArrowStart === null) {
             updateNewArrowStart(statementId)
         } else if (newArrowStart !== statementId) {            
             createArrow(newArrowStart, statementId)                        
             updateNewArrowStart(null)
-        }                    
+        } else {
+            updateNewArrowStart(null)
+        }                   
     }
 
-    
-    // const [newArrowEnds, updateNewArrowEnds] = useState([1, 2])
-    const createArrow = (id1, id2) => {
-        // I have a problem in this silly method of figuring out which list of 
-        // statements the number I have input is in. That won't be an issue
-        // when I'm clicking them. So, let's just test it with that
-        // hard coded and then I'll figure out the clicky way                     
+        
+    const createArrow = (id1, id2) => {           
         const arrowExists = arrowsList.some(e => e[0]===id1 && e[1]===id2)
         if (!arrowExists)  {
             const newArrowsList = arrowsList.concat([[id1, id2]])
@@ -76,11 +67,14 @@ function ConjectureMap() {
         }                                     
     }
 
+    const removeArrow = (id1, id2) => {
+        const newArrowsList = arrowsList.filter(e => e[0] !== id1 || e[1] !== id2)
+        updateArrowsList(newArrowsList)                      
+    }
+
     return (
         <div>
-            <HighLevelConjecture />
-            <button onClick={printStates}>log states</button>            
-            <button onClick={createArrow}>create arrow</button>
+            <HighLevelConjecture />                               
             <div id="columns">
             
                 <Column                          
@@ -90,6 +84,7 @@ function ConjectureMap() {
                     addStatement={addStatement(embodimentStatements, updateEmbodimentStatements)}                    
                     removeStatement={removeStatement(embodimentStatements, updateEmbodimentStatements)}  
                     handleArrowButtonClick={handleArrowButtonClick}
+                    newArrowStart={newArrowStart}
                 />
             
             
@@ -100,6 +95,7 @@ function ConjectureMap() {
                     addStatement={addStatement(medProcessesStatements, updateMedProcessesStatements)}                    
                     removeStatement={removeStatement(medProcessesStatements, updateMedProcessesStatements)}
                     handleArrowButtonClick={handleArrowButtonClick}
+                    newArrowStart={newArrowStart}
                 />
             
                 <Column 
@@ -109,17 +105,18 @@ function ConjectureMap() {
                     addStatement={addStatement(outcomesStatements, updateOutcomesStatements)}                    
                     removeStatement={removeStatement(outcomesStatements, updateOutcomesStatements)}
                     handleArrowButtonClick={handleArrowButtonClick}
+                    newArrowStart={newArrowStart}
                 />
             </div>
             
             {
                 arrowsList.map(el => {                    
                     return (
-                        <Xarrow
+                        <XarrowInteractive
                             key={el[0]+el[1]}
                             start={el[0]} 
                             end={el[1]} 
-                            strokeWidth={2}
+                            removeArrow={removeArrow}                            
                         />
                     )
                 })
