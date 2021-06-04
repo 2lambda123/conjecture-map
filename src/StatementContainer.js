@@ -5,19 +5,17 @@ const StatementContainer = ({id,
                              text, 
                              updateText, 
                              removeStatement,
-                             handleStatementClick
+                             handleArrowButtonClick
                             }) => {
 
     return (
         <div 
             className="statement-container" 
-            id={DOMid}   
-            // ref={ref}        
-            onClick={handleStatementClick}
+            id={DOMid}                                 
         >
             <button 
                 className="remove-btn"
-                onClickCapture={()=>removeStatement(id)}
+                onClick={()=>removeStatement(id)}
             >
                 -
             </button>
@@ -26,6 +24,12 @@ const StatementContainer = ({id,
                 value={text}
                 onChange={event => updateText(id, event)}
             />
+            <button 
+                className="arrow-button"                
+                onClick={handleArrowButtonClick}
+            >
+                →
+            </button>
         </div>
     )
 

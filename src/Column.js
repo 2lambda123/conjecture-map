@@ -6,7 +6,7 @@ function Column({title,
                 updateText,                
                 removeStatement,
                 addStatement,
-                handleStatementClick}) {
+                handleArrowButtonClick}) {
 
     return (
         <div className="column">
@@ -26,7 +26,7 @@ function Column({title,
                                         text={e[1]["text"]}                                                                                
                                         updateText={updateText}
                                         removeStatement={removeStatement}
-                                        handleStatementClick={handleStatementClick}
+                                        handleArrowButtonClick={handleArrowButtonClick}
                                     />                                                                                                                                                       
                             )
                         })
